@@ -15,6 +15,9 @@ export class BoxedContextEditor extends BoxedContext {
       variable: this._dmnFactory.create('dmn:InformationItem', {
         name: '',
         typeRef: ''
+      }),
+      value: this._dmnFactory.create('dmn:LiteralExpression', {
+        text: ''
       })
     });
 
@@ -28,6 +31,10 @@ export class BoxedContextEditor extends BoxedContext {
     });
   }
 
+  setEntryName(entry, name) {
+    this._modeling.updateProperties(entry.variable, { name });
+  }
+  
   removeEntry(boxedContext, entry) {
     this._modeling.updateProperties(boxedContext, {
       contextEntry: this.getEntries(boxedContext).filter(e => e !== entry)

@@ -1,36 +1,30 @@
+import { Component } from 'inferno';
+
 import { is } from 'dmn-js-shared/lib/util/ModelUtil';
 
 import { withChangeSupport } from '../../../util/withChangeSupport';
 import Input from 'dmn-js-shared/lib/components/Input';
 
-export class BoxedContextComponentProvider {
-  static $inject = [ 'components' ];
+class _BoxedContextEditorComponent extends Component {
+  constructor(props, context) {
+    super(props, context);
 
-  constructor(components) {
-    components.onGetComponent('expression', ({ expression }) => {
-      if (is(expression, 'dmn:Context')) {
-        return BoxedContextEditorComponent;
-      }
-    });
+    this._boxedContext = context.injector.get('boxedContext');
+    this._entries = boxedContext.getEntries(expression);
   }
-}
 
-const BoxedContextEditorComponent = withChangeSupport(
-  _BoxedContextEditorComponent,
-  props => [ props.expression ]
-);
+  getEntries = () => {
+    return this._entries;
+  }
 
-
-function _BoxedContextEditorComponent({ expression }, context) {
-  const boxedContext = context.injector.get('boxedContext');
-
-  const entries = boxedContext.getEntries(expression);
-
-  const addEntry = () => {
-    boxedContext.addEntry(expression);
+  addEntry = () => {
+    this._boxedContext.addEntry(expression);
   };
 
-  return (
+  render() {
+    const entries = this.getEntries();
+
+    return (
     <table className="boxed-context">
       <thead>
         <tr>
@@ -56,6 +50,7 @@ function _BoxedContextEditorComponent({ expression }, context) {
       </tfoot>
     </table>
   );
+  }
 }
 
 const ContextEntry = withChangeSupport(_ContextEntry, props => [ props.entry ]);
@@ -83,4 +78,21 @@ function _ContextEntry({ entry, parent }, context) {
       </td>
     </tr>
   );
+}
+
+const BoxedContextEditorComponent = withChangeSupport(
+  _BoxedContextEditorComponent,
+  props => [ props.expression ]
+);
+
+export class BoxedContextComponentProvider {
+  static $inject = [ 'components' ];
+
+  constructor(components) {
+    components.onGetComponent('expression', ({ expression }) => {
+      if (is(expression, 'dmn:Context')) {
+        return BoxedContextEditorComponent;
+      }
+    });
+  }
 }

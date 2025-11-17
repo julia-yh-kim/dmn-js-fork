@@ -1,10 +1,10 @@
 import { BoxedContext } from './BoxedContext';
 import {
-  FunctionDefinitionComponentProvider
-} from './components/FunctionDefinitionComponent';
+  BoxedContextComponentProvider
+} from './components/BoxedContextComponent';
 
 export default {
-  __init__: [ 'functionDefinitionComponent' ],
-  functionDefinition: [ 'type', BoxedContext ],
-  functionDefinitionComponent: [ 'type', FunctionDefinitionComponentProvider ]
+  __init__: [ 'boxedContextComponent' ],
+  boxedContext: [ 'type', BoxedContext ],
+  boxedContextComponent: [ 'type', BoxedContextComponentProvider ]
 };

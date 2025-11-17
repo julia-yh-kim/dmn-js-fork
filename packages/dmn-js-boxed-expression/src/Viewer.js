@@ -228,7 +228,8 @@ export class Viewer extends BaseViewer {
       ElementLogicModule,
       FunctionDefinitionEditorModule,
       LiteralExpressionModule,
-      ElementVariableModule
+      ElementVariableModule,
+      BoxedContextEditorModule
     ];
   }
 

@@ -11,7 +11,7 @@ export default {
       }
     },
     {
-      label: 'Decision table',
+      label: 'Decision Table',
       actionName: 'replace-with-decision-table',
       className: 'dmn-icon-decision-table',
       target: {
@@ -21,13 +21,24 @@ export default {
       }
     },
     {
-      label: 'Literal expression',
+      label: 'Literal Expression',
       actionName: 'replace-with-literal-expression',
       className: 'dmn-icon-literal-expression',
       target: {
         type: 'dmn:Decision',
         table: false,
         expression: true
+      }
+    },
+    {
+      label: 'Boxed Context',
+      actionName: 'replace-with-boxed-context',
+      className: 'dmn-icon-literal-expression',
+      target: {
+        type: 'dmn:Decision',
+        table: false,
+        expression: false,
+        context: true
       }
     }
   ],
@@ -50,6 +61,17 @@ export default {
         type: 'dmn:BusinessKnowledgeModel',
         table: false,
         expression: true
+      }
+    },
+    {
+      label: 'Boxed Context',
+      actionName: 'replace-with-boxed-context',
+      className: 'dmn-icon-literal-expression',
+      target: {
+        type: 'dmn:BusinessKnowledgeModel',
+        table: false,
+        expression: false,
+        context: true
       }
     }
   ]

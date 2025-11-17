@@ -5,10 +5,11 @@ import DecisionTableEditor from 'dmn-js-decision-table/lib/Editor';
 import LiteralExpressionEditor from 'dmn-js-literal-expression/lib/Editor';
 import { Editor as BoxedExpressionEditor } from 'dmn-js-boxed-expression';
 
-import { is, getBoxedExpression } from 'dmn-js-shared/lib/util/ModelUtil';
+import { is, isAny, getBoxedExpression } from 'dmn-js-shared/lib/util/ModelUtil';
 import { containsDi } from 'dmn-js-shared/lib/util/DiUtil';
 
 import { find } from 'min-dash';
+import { BoxedContextEditor } from 'dmn-js-boxed-expression/src/features/boxed-context/BoxedContextEditor';
 
 
 /**
@@ -45,12 +46,24 @@ export default class Modeler extends EditingManager {
         }
       },
       {
+        id: 'contextExpression',
+        constructor: BoxedContextEditor,
+        opens(element) {
+          return (
+            is(element, 'dmn:Decision') &&
+            is(element.decisionLogic, 'dmn:Context')
+          );
+        }
+      },
+      {
         id: 'boxedExpression',
         constructor: BoxedExpressionEditor,
         opens(element) {
           return (
-            is(element, 'dmn:BusinessKnowledgeModel') &&
-            getBoxedExpression(element)
+            isAny(element, [ 'dmn:BusinessKnowledgeModel', 'dmn:Decision' ]
+            ) &&
+            isAny(getBoxedExpression(element),
+              [ 'dmn:Context', 'dmn:DecisionTable', 'dmn:LiteralExpression' ])
           );
         }
       }
